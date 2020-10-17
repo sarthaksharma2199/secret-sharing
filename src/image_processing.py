@@ -5,31 +5,31 @@ from scheme import Scheme, np
 
 
 def split_parts_list(n, k, prime, img, path_pic):
-    h, w, rgb = img.shape  # visina, sirina slike
-    name, ext = path.splitext(path_pic)  # putanja slike, odvajanje ekstenzije
+    h, w, rgb = img.shape  # height, image width
+    name, ext = path.splitext(path_pic)  # split to image path and extension
     np_lists = np.zeros(shape=(n, h, w, 3))
-    # np_lists = [[] for i in range(n)]  # prazne liste, za shares - slike
+    # np_lists = [[] for i in range(n)]  # blank list, for shares of picture
     shrs = [[[[] for j in range(w)] for i in range(h)],
             [[[] for j in range(w)] for i in range(h)],
             [[[] for j in range(w)] for i in
-             range(h)]]  # shares vrijednosti za svaki piksel RGB : shrs[0] je crvena ...
-     # slika je matrica = niz nizova(redova) piksela
+             range(h)]]  # share values for each pixel RGB : shrs[0] is red ...
+     # the image is a matrix = a series of rows of pixels
     row_count = 0
-    for row in img:  # za svaki red u nizu redova
+    for row in img:  # for each row in img
         new_rows = np.zeros(shape=(n, w, 3))
-        # new_rows = [[] for j in range(n)]  # pravimo nove redove tj onoliko redova koliko imamo podjela = n
+        # new_rows = [[] for j in range(n)]  # we make new rows, ie as many rows as we have division = n
         pix_count = 0
         for pix in row:
             if len(pix) == 3:
-                r, g, b = pix[0], pix[1], pix[2]  # provjera da li je piksel obicni => tri vrijednosti => RGB
-            else:  # ili ima 4 vrijednosti, gdje je indikator alfa prva vrijednost
+                r, g, b = pix[0], pix[1], pix[2]  # check that the pixel is plain => three values ​​=> RGB
+            else:  # or has 4 values, where the alpha indicator is the first value
                 r, g, b = pix[1], pix[2], pix[3]
             p1, p2, p3 = Scheme(r, n, k, prime), Scheme(g, n, k, prime), Scheme(b, n, k,
-                                                                                prime)  # svaku vrijednost boja u pikselu dijelimo SSSA-om na n vrijednosti
+                                                                                prime)  # each color value in a pixel is divided by SSSA into n values
             sh1, sh2, sh3 = p1.construct_shares_image(), p2.construct_shares_image(), p3.construct_shares_image()
             for i in range(n):
                 new_rows[i][pix_count] = [sh1[i + 1], sh2[i + 1],
-                                          sh3[i + 1]]  # u postojece nizove novih slika dodajemo novonastale piksele
+                                          sh3[i + 1]]  # we add newly created pixels to existing strings of new images
             shrs[0][row_count][pix_count] = sh1
             shrs[1][row_count][pix_count] = sh2
             shrs[2][row_count][pix_count] = sh3
@@ -37,11 +37,11 @@ def split_parts_list(n, k, prime, img, path_pic):
         row_count += 1
         v = 0
         for el in range(n):
-            np_lists[el][row_count - 1] = new_rows[el]  # dodavanje citavog reda u matrice shares - slika
+            np_lists[el][row_count - 1] = new_rows[el]  #adding the entire row to the shares matrix - image
             v += 1
     i = 0
     for image in np_lists:
-        new_img = Image.fromarray(image.astype('uint8'))  # kreiranje shares - slika od novonastalih matrica
+        new_img = Image.fromarray(image.astype('uint8'))  #creating shares - images from newly created matrices
         cuvanje = name + "_share" + str(i)
         cuvanje += ".png"
         new_img.save(cuvanje)
@@ -147,7 +147,7 @@ def euclidean_dist(cnt, row, col, pix, sh_pix, rec_info, rec_pic, shares, k, pri
         uR = (pix[0] + adjacent[a][0]) / 2
         uR2 = (R + sec_adj[a][0]) / 2
         dist1 += sqrt(cR * cR * (2 + uR / 256) + cG * cG * 4 + cB * cB * (2 + (255 - uR) / 256))
-        # racunanje reconstruct_secret preko prethodne vrijednosti, tj. ako piksel stavimo na 256 ( prethodno u ekripciji postavljen na 0)
+        # computing reconstruct_secret over the previous value, ie. if we set the pixel to 256 (previously set to 0 in encryption)
         dist2 += sqrt(cR2 * cR2 * (2 + uR2 / 256) + cG2 * cG2 * 4 + cB2 * cB2 * (2 + (255 - uR2) / 256))
 
     if dist1 < dist2:

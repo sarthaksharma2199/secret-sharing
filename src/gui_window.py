@@ -11,14 +11,14 @@ class Ui_ShamirSecretSharing(object):
 
     def browse_img(self):
         while True:
-            pname, _filter = QtWidgets.QFileDialog.getOpenFileName(None, "Odaberi sliku", '.', "(*.tif *.tiff *.jpg *.jpeg *.gif *.png *.bmp *.eps *.raw *.cr2 "
+            pname, _filter = QtWidgets.QFileDialog.getOpenFileName(None, "Select an image", '.', "(*.tif *.tiff *.jpg *.jpeg *.gif *.png *.bmp *.eps *.raw *.cr2 "
                                                                                                "*.nef *.orf *.sr2)")
             print(pname)
             if pname is not None:
                 break
-        image_profile = QtGui.QImage(pname)  # QImage objekat
+        image_profile = QtGui.QImage(pname)  # QImage object
         image_profile = image_profile.scaled(331, 251, aspectRatioMode=QtCore.Qt.KeepAspectRatio,
-                                             transformMode=QtCore.Qt.SmoothTransformation)  # skaliranje slike na 331x251 i ocuvanje aspect ratio
+                                             transformMode=QtCore.Qt.SmoothTransformation)  # scaling the image to 331x251 and preserving the aspect ratio
         self.label_29.setPixmap(QtGui.QPixmap.fromImage(image_profile))
         self.path_image = pname
         self.dir_name = path.dirname(pname)
@@ -26,10 +26,10 @@ class Ui_ShamirSecretSharing(object):
     def encrypt_img(self):
         self.listWidget.clear()
         if self.label_29.pixmap() is None:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Молим унесите слику")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Молим унесите слику")
             self.error_message.exec_()
         elif self.spinBox.value() == 0 or self.spinBox.value() < self.spinBox_2.value() or self.spinBox_2.value() == 0 or self.spinBox.value() < 2 or self.spinBox_2.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Неки од броја подјела није добар")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Неки од броја подјела није добар")
             self.error_message.exec_()
         else:
             self.img_name, self.ext = path.splitext(self.path_image)
@@ -49,10 +49,10 @@ class Ui_ShamirSecretSharing(object):
     def encrypt_text(self):
         self.listWidget_4.clear()
         if self.textEdit.toPlainText() is None or self.textEdit.toPlainText() == "":
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Молим унесите текст за енкрипцију")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Молим унесите текст за енкрипцију")
             self.error_message.exec_()
         elif self.spinBox_4.value() == 0 or self.spinBox_4.value() < self.spinBox_3.value() or self.spinBox_3.value() == 0 or self.spinBox_3.value() < 2 or self.spinBox_4.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Неки од броја подјела није добар")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Неки од броја подјела није добар")
             self.error_message.exec_()
         else:
             self.secret_text = self.textEdit.toPlainText()
@@ -87,11 +87,11 @@ class Ui_ShamirSecretSharing(object):
     def encrypt_number(self):
         self.listWidget_6.clear()
         if self.spinBox_5.value() == 0:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка",
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error",
                                                        "Молим унесите број за енкрипцију")
             self.error_message.exec_()
         elif self.spinBox_12.value() == 0 or self.spinBox_12.value() < self.spinBox_11.value() or self.spinBox_11.value() == 0 or self.spinBox_12.value() < 2 or self.spinBox_11.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка",
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error",
                                                        "Неки од броја подјела није добар")
             self.error_message.exec_()
         else:
@@ -104,10 +104,10 @@ class Ui_ShamirSecretSharing(object):
 
     def add_share(self):
         if self.label_29.pixmap() is None:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Слика није енкриптована")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Слика није енкриптована")
             self.error_message.exec_()
         elif self.spinBox.value() == 0 or self.spinBox.value() < self.spinBox_2.value() or self.spinBox_2.value() == 0 or self.spinBox.value() < 3 or self.spinBox_2.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка",
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error",
                                                        "Неки од броја подјела није добар")
             self.error_message.exec_()
         else:
@@ -121,10 +121,10 @@ class Ui_ShamirSecretSharing(object):
 
     def add_text_share(self):
         if self.textEdit.toPlainText() is None or self.textEdit.toPlainText() == "":
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Молим унесите текст за енкрипцију")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Молим унесите текст за енкрипцију")
             self.error_message.exec_()
         elif self.spinBox_4.value() == 0 or self.spinBox_4.value() < self.spinBox_3.value() or self.spinBox_3.value() == 0 or self.spinBox_3.value() < 2 or self.spinBox_4.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Неки од броја подјела није добар")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Неки од броја подјела није добар")
             self.error_message.exec_()
         else:
             word = self.textEdit_3.toPlainText()
@@ -146,13 +146,13 @@ class Ui_ShamirSecretSharing(object):
 
     def decrypt_images(self):
         if self.label_29.pixmap() is None:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Слика није енкриптована")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Слика није енкриптована")
             self.error_message.exec_()
         elif self.spinBox.value() == 0 or self.spinBox.value() < self.spinBox_2.value() or self.spinBox_2.value() == 0 or self.spinBox.value() < 3 or self.spinBox_2.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Неки од броја подјела није добар")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Неки од броја подјела није добар")
             self.error_message.exec_()
         elif self.listWidget_2.count() < self.spinBox_2.value():
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Није унешено довољно слика")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Није унешено довољно слика")
             self.error_message.exec_()
         else:
             matrix = reconstruct_image(self.shares_for_reconstruction, self.spinBox_2.value(), 257, self.sharesRGB)
@@ -166,13 +166,13 @@ class Ui_ShamirSecretSharing(object):
 
     def decrypt_text(self):
         if self.textEdit.toPlainText() is None or self.textEdit.toPlainText() == "":
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Молим унесите текст за енкрипцију")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Молим унесите текст за енкрипцију")
             self.error_message.exec_()
         elif self.spinBox_4.value() == 0 or self.spinBox_4.value() < self.spinBox_3.value() or self.spinBox_3.value() == 0 or self.spinBox_3.value() < 2 or self.spinBox_4.value() < 2:
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Неки од броја подјела није добар")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Неки од броја подјела није добар")
             self.error_message.exec_()
         elif self.listWidget_5.count() < self.spinBox_3.value():
-            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Грешка", "Није унешено довољно дијелова")
+            self.error_message = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Critical, "Error", "Није унешено довољно дијелова")
             self.error_message.exec_()
         else:
             reconstructed_secret = ""
